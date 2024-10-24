@@ -1,14 +1,12 @@
 package com.ssafy.todo.repository;
 
+import com.ssafy.todo.dto.TodoGetDto;
 import com.ssafy.todo.vo.Todo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public class TodoRepository {
+public interface TodoRepository {
 
-    public List<Todo> getTodos() {
-        return null;
-    }
+    public List<Todo> getTodos();
 }

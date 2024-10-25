@@ -1,27 +1,31 @@
 package com.ssafy.todo.controller;
 
+import com.ssafy.todo.dto.TodoGetDto;
 import com.ssafy.todo.service.TodoService;
 import com.ssafy.todo.service.TodoServiceImpl;
 import com.ssafy.todo.vo.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@Controller
-@CrossOrigin(origins = "*")
+@RestController
+@RequestMapping("/todos")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TodoController {
 
     @Autowired
     TodoService service;
 
-    @GetMapping("/todos")
-    public Model getTodos(Model model){
-        List<Todo> todos = service.getTodos();
-        model.addAttribute("todos", todos);
-        return model;
+    @GetMapping
+    public Map<String, List<TodoGetDto>> getTodos() {
+        List<TodoGetDto> todos = service.getTodos();
+        Map<String, List<TodoGetDto>> response = new HashMap<>();
+        response.put("todos", todos);
+        return response;
     }
 }

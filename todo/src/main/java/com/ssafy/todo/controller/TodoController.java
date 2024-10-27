@@ -21,9 +21,17 @@ public class TodoController {
     @Autowired
     TodoService service;
 
+//    @GetMapping
+//    public Map<String, List<TodoGetDto>> getTodos() {
+//        List<TodoGetDto> todos = service.getTodos();
+//        Map<String, List<TodoGetDto>> response = new HashMap<>();
+//        response.put("todos", todos);
+//        return response;
+//    }
+
     @GetMapping
-    public Map<String, List<TodoGetDto>> getTodos() {
-        List<TodoGetDto> todos = service.getTodos();
+    public Map<String, List<TodoGetDto>> getTodosWithQuerydsl() {
+        List<TodoGetDto> todos = service.getTodosWithQuerydsl();
         Map<String, List<TodoGetDto>> response = new HashMap<>();
         response.put("todos", todos);
         return response;

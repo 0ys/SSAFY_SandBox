@@ -1,6 +1,7 @@
 package com.ssafy.todo.service;
 
 import com.ssafy.todo.dto.TodoGetDto;
+import com.ssafy.todo.repository.TodoQuerydslRepository;
 import com.ssafy.todo.repository.TodoRepository;
 import com.ssafy.todo.repository.TodoRepositoryImpl;
 import com.ssafy.todo.vo.Todo;
@@ -16,9 +17,20 @@ public class TodoServiceImpl implements TodoService{
     @Autowired
     TodoRepository repository;
 
+    @Autowired
+    TodoQuerydslRepository querydslRepository;
+
     @Override
     public List<TodoGetDto> getTodos() {
         List<Todo> todos = repository.getTodos();
+        return todos.stream()
+                .map(TodoGetDto::of)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TodoGetDto> getTodosWithQuerydsl() {
+        List<Todo> todos = querydslRepository.getTodosWithQuerydsl();
         return todos.stream()
                 .map(TodoGetDto::of)
                 .collect(Collectors.toList());

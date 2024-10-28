@@ -4,6 +4,7 @@ import com.ssafy.todo.dto.TodoGetDto;
 import com.ssafy.todo.repository.TodoRepository;
 import com.ssafy.todo.repository.TodoRepositoryImpl;
 import com.ssafy.todo.vo.Todo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class TodoServiceImpl implements TodoService{
 
     @Autowired
@@ -19,9 +21,11 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public List<TodoGetDto> getTodos() {
         List<Todo> todos = repository.getTodos();
+        //log.info("log");
         return todos.stream()
                 .map(TodoGetDto::of)
                 .collect(Collectors.toList());
+        // List<Todo>를 List<TodoGetDto>로 변환
     }
 
     @Override

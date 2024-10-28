@@ -22,10 +22,11 @@ public class TodoController {
     TodoService service;
 
     @GetMapping
-    public Map<String, List<TodoGetDto>> getTodos() {
+    public Map<String, Object> getTodos() {
         List<TodoGetDto> todos = service.getTodos();
-        Map<String, List<TodoGetDto>> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "정상적으로 요청되었습니다.");
         response.put("todos", todos);
-        return response;
+        return response; //map -> json
     }
 }

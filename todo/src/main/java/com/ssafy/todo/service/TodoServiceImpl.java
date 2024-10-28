@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 public class TodoServiceImpl implements TodoService{
 
     @Autowired
-    TodoRepository repository;
+    private TodoRepository repository;
 
     @Autowired
-    TodoQuerydslRepository querydslRepository;
+    private TodoQuerydslRepository querydslRepository;
 
     @Override
     public List<TodoGetDto> getTodos() {
@@ -43,7 +43,8 @@ public class TodoServiceImpl implements TodoService{
 
     @Override
     public void updateTodo(int id) {
-
+        Todo updateTodo = repository.findOne(id);
+        repository.updateTodo(id, updateTodo);
     }
 
     @Override

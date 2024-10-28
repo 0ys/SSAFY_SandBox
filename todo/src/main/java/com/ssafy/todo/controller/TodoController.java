@@ -21,12 +21,19 @@ public class TodoController {
     @Autowired
     TodoService service;
 
+//    @GetMapping
+//    public Map<String, List<TodoGetDto>> getTodos() {
+//        List<TodoGetDto> todos = service.getTodos();
+//        Map<String, List<TodoGetDto>> response = new HashMap<>();
+//        response.put("todos", todos);
+//        return response;
+//    }
+
     @GetMapping
-    public Map<String, Object> getTodos() {
-        List<TodoGetDto> todos = service.getTodos();
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "정상적으로 요청되었습니다.");
+    public Map<String, List<TodoGetDto>> getTodosWithQuerydsl() {
+        List<TodoGetDto> todos = service.getTodosWithQuerydsl();
+        Map<String, List<TodoGetDto>> response = new HashMap<>();
         response.put("todos", todos);
-        return response; //map -> json
+        return response;
     }
 }

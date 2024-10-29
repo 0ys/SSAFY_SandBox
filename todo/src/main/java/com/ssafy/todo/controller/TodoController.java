@@ -2,11 +2,7 @@ package com.ssafy.todo.controller;
 
 import com.ssafy.todo.dto.TodoGetDto;
 import com.ssafy.todo.service.TodoService;
-import com.ssafy.todo.service.TodoServiceImpl;
-import com.ssafy.todo.vo.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -35,5 +31,16 @@ public class TodoController {
         Map<String, List<TodoGetDto>> response = new HashMap<>();
         response.put("todos", todos);
         return response;
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTodo(@PathVariable int id) {
+        service.deleteTodo(id);
+    }
+
+    @PostMapping
+    public void insertTodo(@RequestBody Map<String, String> todo) {
+        String content = todo.get("content");
+        service.insertTodo(content);
     }
 }

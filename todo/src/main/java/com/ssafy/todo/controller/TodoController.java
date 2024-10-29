@@ -33,6 +33,11 @@ public class TodoController {
         return response;
     }
 
+    @PatchMapping("/{id}")
+    public void updateTodo(@PathVariable("id") int id){
+        service.updateTodo(id);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteTodo(@PathVariable int id) {
         service.deleteTodo(id);

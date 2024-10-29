@@ -2,13 +2,7 @@ package com.ssafy.todo.controller;
 
 import com.ssafy.todo.dto.TodoGetDto;
 import com.ssafy.todo.service.TodoService;
-import com.ssafy.todo.service.TodoServiceImpl;
-import com.ssafy.todo.vo.Todo;
-import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -17,7 +11,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/todos")
-@Transactional
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TodoController {
 
@@ -43,5 +36,16 @@ public class TodoController {
     @PatchMapping("/{id}")
     public void updateTodo(@PathVariable("id") int id){
         service.updateTodo(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTodo(@PathVariable int id) {
+        service.deleteTodo(id);
+    }
+
+    @PostMapping
+    public void insertTodo(@RequestBody Map<String, String> todo) {
+        String content = todo.get("content");
+        service.insertTodo(content);
     }
 }

@@ -1,7 +1,6 @@
 package com.ssafy.todo.service;
 
 import com.ssafy.todo.dto.TodoGetDto;
-import com.ssafy.todo.vo.Todo;
 
 import java.util.List;
 

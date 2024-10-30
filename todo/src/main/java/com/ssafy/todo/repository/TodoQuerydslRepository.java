@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TodoQuerydslRepository {
     List<Todo> getTodosWithQuerydsl();
+
 }

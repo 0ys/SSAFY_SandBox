@@ -2,6 +2,7 @@ package com.ssafy.todo.controller;
 
 import com.ssafy.todo.dto.TodoGetDto;
 import com.ssafy.todo.service.TodoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpRequest;
@@ -19,10 +20,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/todos")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequiredArgsConstructor
 public class TodoController {
 
-    @Autowired
-    TodoService service;
+    private final TodoService service;
 
 //    @GetMapping
 //    public Map<String, List<TodoGetDto>> getTodos() {

@@ -1,14 +1,14 @@
 package com.ssafy.todo.repository;
 
 import com.ssafy.todo.vo.Todo;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+public interface TodoRepository extends JpaRepository<Todo, Integer>, TodoQuerydslRepository {
 
-public interface TodoRepository {
-
-    boolean deleteTodo(int id);
-    long insertTodo(String content);
-    List<Todo> getTodos();
-    Todo findOne(int id);
-    boolean updateTodo(int id, Todo updatedTodo);
+    // JpaRepository를 상속받기 때문에 더이상 사용하지 않음
+//    boolean deleteTodo(int id);
+//    long insertTodo(String content);
+//    List<Todo> getTodos();
+//    Todo findOne(int id);
+//    boolean updateTodo(int id, Todo updatedTodo);
 }

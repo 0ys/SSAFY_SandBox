@@ -43,20 +43,20 @@ public class TodoServiceImpl implements TodoService{
 
     @Override
     @Transactional
-    public void deleteTodo(int id) {
-        repository.deleteTodo(id);
+    public boolean deleteTodo(int id) {
+        return repository.deleteTodo(id);
     }
 
     @Override
     @Transactional
-    public void updateTodo(int id) {
+    public boolean updateTodo(int id) {
         Todo updateTodo = repository.findOne(id);
-        repository.updateTodo(id, updateTodo);
+        return repository.updateTodo(id, updateTodo);
     }
 
     @Override
     @Transactional
-    public void insertTodo(String content) {
-        repository.insertTodo(content);
+    public long insertTodo(String content) {
+        return repository.insertTodo(content);
     }
 }

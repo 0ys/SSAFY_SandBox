@@ -21,24 +21,28 @@ public class TodoRepositoryImpl implements TodoRepository{
     }
 
     @Override
-    public void deleteTodo(int id) {
+    public boolean deleteTodo(int id) {
         String query = "DELETE FROM Todo t WHERE t.id = :id";
-        em.createQuery(query).setParameter("id", id).executeUpdate();
+        int cnt = em.createQuery(query).setParameter("id", id).executeUpdate();
+        return cnt >= 1;
     }
 
     @Override
-    public void insertTodo(String content) {
+    public long insertTodo(String content) {
         String query = "INSERT INTO Todo (content) VALUES (:content)";
         em.createQuery(query).setParameter("content", content).executeUpdate();
+
+        return (long) em.createNativeQuery("SELECT LAST_INSERT_ID()").getSingleResult();
     }
 
     @Override
-    public void updateTodo(int id, Todo updatedTodo) {
+    public boolean updateTodo(int id, Todo updatedTodo) {
         String query = "UPDATE Todo t SET t.completed =:completed WHERE t.id =:id";
-        em.createQuery(query)
+        int cnt = em.createQuery(query)
                 .setParameter("completed", !updatedTodo.getCompleted())
                 .setParameter("id", id)
                 .executeUpdate();
+        return cnt >= 1;
     }
 
     @Override

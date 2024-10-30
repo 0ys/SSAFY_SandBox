@@ -7,7 +7,7 @@ import java.util.List;
 public interface TodoService {
     List<TodoGetDto> getTodos();
     List<TodoGetDto> getTodosWithQuerydsl();
-    void deleteTodo(int id);
-    void updateTodo(int id);
-    void insertTodo(String content);
+    boolean deleteTodo(int id);
+    boolean updateTodo(int id);
+    long insertTodo(String content);
 }

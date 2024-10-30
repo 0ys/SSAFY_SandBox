@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface TodoRepository {
 
-    void deleteTodo(int id);
-    void insertTodo(String content);
+    boolean deleteTodo(int id);
+    long insertTodo(String content);
     List<Todo> getTodos();
     Todo findOne(int id);
-    void updateTodo(int id, Todo updatedTodo);
+    boolean updateTodo(int id, Todo updatedTodo);
 }

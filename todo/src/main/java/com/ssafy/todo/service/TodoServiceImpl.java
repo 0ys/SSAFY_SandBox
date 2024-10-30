@@ -1,13 +1,11 @@
 package com.ssafy.todo.service;
 
 import com.ssafy.todo.dto.TodoGetDto;
-import com.ssafy.todo.repository.TodoQuerydslRepository;
 import com.ssafy.todo.repository.TodoRepository;
 import com.ssafy.todo.vo.Todo;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

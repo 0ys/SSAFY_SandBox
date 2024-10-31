@@ -1,5 +1,6 @@
 package com.ssafy.todo.controller;
 
+import com.ssafy.todo.dto.TodoCreateDto;
 import com.ssafy.todo.dto.TodoGetDto;
 import com.ssafy.todo.service.TodoService;
 import com.ssafy.todo.util.ResponseUtil;
@@ -50,9 +51,8 @@ public class TodoController {
     }
 
     @PostMapping
-    public ResponseEntity<String> insertTodo(@RequestBody Map<String, String> todo) {
-        String content = todo.get("content");
-        long id = service.insertTodo(content);
+    public ResponseEntity<String> insertTodo(@RequestBody TodoCreateDto dto) {
+        long id = service.insertTodo(dto.getContent());
         return ResponseUtil.createBooleanResponse(id > 0, id + "의 todo가 생성되었습니다.");
     }
 

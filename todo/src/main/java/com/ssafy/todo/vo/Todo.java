@@ -1,13 +1,15 @@
 package com.ssafy.todo.vo;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Getter @Setter
 @DynamicInsert
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Todo {
 
     @Id

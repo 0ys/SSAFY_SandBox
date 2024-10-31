@@ -25,16 +25,18 @@ public class TodoServiceImpl implements TodoService{
     @Override
     public List<TodoGetDto> getTodos() {
         List<Todo> todos = repository.findAll();
-        return todos.stream()
-                .map(TodoGetDto::of)
-                .collect(Collectors.toList());
+        return todos.stream().map(todo -> TodoGetDto.builder()
+                .id(todo.getId())
+                .content(todo.getContent())
+                .completed(todo.getCompleted())
+                .build()).collect(Collectors.toList());
     }
 
 //    @Override
 //    public List<TodoGetDto> getTodosWithQuerydsl() {
 //        List<Todo> todos = repository.getTodosWithQuerydsl();
 //        return todos.stream()
-//                .map(TodoGetDto::of)
+//                .map(TodoGetDto::from)
 //                .collect(Collectors.toList());
 //    }
 
@@ -64,9 +66,13 @@ public class TodoServiceImpl implements TodoService{
     @Override
     @Transactional
     public long insertTodo(String content) {
-        Todo todo = new Todo();
-        todo.setContent(content);
-        repository.save(todo);
-        return todo.getId();
+        Todo todo = Todo.builder()
+                .content(content)
+                .build();
+
+        Todo savedTodo = repository.save(todo);
+        return savedTodo.getId();
+
     }
+
 }

@@ -1,6 +1,6 @@
-package com.ssafy.todo.util;
+package com.ssafy.sandbox.todo.util;
 
-import com.ssafy.todo.dto.TodoGetDto;
+import com.ssafy.sandbox.todo.dto.TodoGetDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

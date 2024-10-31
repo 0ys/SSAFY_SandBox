@@ -1,6 +1,5 @@
-package com.ssafy.todo.dto;
+package com.ssafy.sandbox.todo.dto;
 
-import com.ssafy.todo.vo.Todo;
 import lombok.*;
 
 @Getter

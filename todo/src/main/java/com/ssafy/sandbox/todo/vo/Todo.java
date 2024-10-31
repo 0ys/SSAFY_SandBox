@@ -1,4 +1,4 @@
-package com.ssafy.todo.vo;
+package com.ssafy.sandbox.todo.vo;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.ssafy.todo.service;
+package com.ssafy.sandbox.todo.service;
 
-import com.ssafy.todo.dto.TodoGetDto;
+import com.ssafy.sandbox.todo.dto.TodoGetDto;
 
 import java.util.List;
 

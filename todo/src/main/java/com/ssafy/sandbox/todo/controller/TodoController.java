@@ -1,9 +1,9 @@
-package com.ssafy.todo.controller;
+package com.ssafy.sandbox.todo.controller;
 
-import com.ssafy.todo.dto.TodoCreateDto;
-import com.ssafy.todo.dto.TodoGetDto;
-import com.ssafy.todo.service.TodoService;
-import com.ssafy.todo.util.ResponseUtil;
+import com.ssafy.sandbox.todo.dto.TodoCreateDto;
+import com.ssafy.sandbox.todo.dto.TodoGetDto;
+import com.ssafy.sandbox.todo.service.TodoService;
+import com.ssafy.sandbox.todo.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

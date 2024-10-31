@@ -1,8 +1,8 @@
-package com.ssafy.todo.repository;
+package com.ssafy.sandbox.todo.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.ssafy.todo.vo.QTodo;
-import com.ssafy.todo.vo.Todo;
+import com.ssafy.sandbox.todo.vo.QTodo;
+import com.ssafy.sandbox.todo.vo.Todo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;

@@ -1,8 +1,8 @@
-package com.ssafy.todo.service;
+package com.ssafy.sandbox.todo.service;
 
-import com.ssafy.todo.dto.TodoGetDto;
-import com.ssafy.todo.repository.TodoRepository;
-import com.ssafy.todo.vo.Todo;
+import com.ssafy.sandbox.todo.dto.TodoGetDto;
+import com.ssafy.sandbox.todo.repository.TodoRepository;
+import com.ssafy.sandbox.todo.vo.Todo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

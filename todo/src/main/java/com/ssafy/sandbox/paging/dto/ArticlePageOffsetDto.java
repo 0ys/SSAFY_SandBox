@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ArticlePageDto {
+public class ArticlePageOffsetDto {
     private int totalPage;
     private List<Article> articles;
 }

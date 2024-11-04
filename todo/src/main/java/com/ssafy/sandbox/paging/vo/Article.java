@@ -17,10 +17,8 @@ public class Article {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-//    private int userId;
 
     private String title;
-//    private Boolean completed;
     private Date createdAt;
 
 }

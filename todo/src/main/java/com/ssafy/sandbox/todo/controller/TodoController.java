@@ -35,9 +35,7 @@ public class TodoController {
     @GetMapping
     public ResponseEntity<Map<String, Object>> getTodos() {
         List<TodoGetDto> todos = service.getTodos();
-        return (todos != null && !todos.isEmpty())
-                ? ResponseEntity.ok(ResponseUtil.createTodoListResponse("정상적으로 요청되었습니다.", todos))
-                : ResponseEntity.ok(ResponseUtil.createTodoListResponse("정상적이지 않은 요청입니다.", null));
+        return ResponseEntity.ok(ResponseUtil.createTodoListResponse("정상적으로 요청되었습니다.", todos));
     }
 
     @DeleteMapping("/{id}")

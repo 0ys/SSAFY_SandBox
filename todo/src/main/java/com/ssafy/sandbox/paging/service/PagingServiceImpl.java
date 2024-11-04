@@ -1,9 +1,11 @@
 package com.ssafy.sandbox.paging.service;
 
-import com.ssafy.sandbox.paging.dto.ArticlePageDto;
+import com.ssafy.sandbox.paging.dto.ArticlePageCursorDto;
+import com.ssafy.sandbox.paging.dto.ArticlePageOffsetDto;
 import com.ssafy.sandbox.paging.repository.PagingRepository;
 import com.ssafy.sandbox.paging.vo.Article;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -20,14 +23,33 @@ public class PagingServiceImpl implements PagingService {
     private final PagingRepository pagingRepository;
 
     @Override
-    public ArticlePageDto getArticlesByOffset(int page, int size) {
+    public ArticlePageOffsetDto getArticlesByOffset(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
         Page<Article> articlePage = pagingRepository.findAll(pageRequest);
 
         List<Article> articles = articlePage.getContent();
         int totalPages = articlePage.getTotalPages();
 
-        return new ArticlePageDto(totalPages, articles);
+        return new ArticlePageOffsetDto(totalPages, articles);
+    }
+
+    @Override
+    public ArticlePageCursorDto getArticleByCursor(int size, int cursorId) {
+        PageRequest pageRequest = PageRequest.of(0, size, Sort.by("id").ascending());
+        Page<Article> articlePage;
+        if(cursorId == 0) {
+            articlePage = pagingRepository.findAll(pageRequest);
+        } else {
+            articlePage = pagingRepository.findByIdGreaterThan(cursorId, pageRequest);
+        }
+
+        List<Article> articles = articlePage.getContent();
+        if(!articles.isEmpty()) {
+            //log.debug("articles: {}", articles);
+            int lastId = articles.get(articles.size() - 1).getId();
+            return new ArticlePageCursorDto(lastId, articles);
+        }
+        return new ArticlePageCursorDto(articles);
     }
 
 //    @Transactional

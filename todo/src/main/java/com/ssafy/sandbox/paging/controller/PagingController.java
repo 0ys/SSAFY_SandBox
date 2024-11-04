@@ -1,6 +1,7 @@
 package com.ssafy.sandbox.paging.controller;
 
-import com.ssafy.sandbox.paging.dto.ArticlePageDto;
+import com.ssafy.sandbox.paging.dto.ArticlePageCursorDto;
+import com.ssafy.sandbox.paging.dto.ArticlePageOffsetDto;
 import com.ssafy.sandbox.paging.service.PagingService;
 import com.ssafy.sandbox.paging.vo.Article;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,15 @@ public class PagingController {
     public ResponseEntity<?> getArticlesByOffset(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
-        ArticlePageDto articlePage = pagingService.getArticlesByOffset(page-1, size);
+        ArticlePageOffsetDto articlePage = pagingService.getArticlesByOffset(page-1, size);
+        return ResponseEntity.ok(articlePage);
+    }
+
+    @GetMapping("/paging/cursor")
+    public ResponseEntity<?> getArticlesByCursor(
+            @RequestParam("size") int size,
+            @RequestParam("cursorId") int cursorId){
+        ArticlePageCursorDto articlePage = pagingService.getArticleByCursor(size, cursorId);
         return ResponseEntity.ok(articlePage);
     }
 

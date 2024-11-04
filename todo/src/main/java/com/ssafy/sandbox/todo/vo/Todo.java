@@ -2,6 +2,7 @@ package com.ssafy.sandbox.todo.vo;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 @Entity
@@ -17,5 +18,7 @@ public class Todo {
     int id;
 
     String content;
+
+    @ColumnDefault("0")
     Boolean completed;
 }

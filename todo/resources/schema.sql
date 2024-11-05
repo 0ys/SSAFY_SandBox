@@ -20,7 +20,7 @@ USE `tododb` ;
 CREATE TABLE IF NOT EXISTS `tododb`.`todo` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `content` VARCHAR(100) NOT NULL,
-  `completed` TINYINT NULL DEFAULT 0,
+  `completed` TINYINT DEFAULT 0,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 

@@ -27,6 +27,15 @@ spring:
           starttls:
             enable: true
 
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: "0da56a0700a56821782b91c49ce03b42"
+            redirect-uri: "https://ssafysandbox.vercel.app/oauth/redirect"
+            authorization-grant-type: authorization_code
+
 logging.level:
   org.hibernate.SQL: debug
 #  org.hibernate.type: trace

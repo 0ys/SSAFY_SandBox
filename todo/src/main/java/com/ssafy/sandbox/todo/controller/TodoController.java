@@ -13,7 +13,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/todos")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 public class TodoController {
 

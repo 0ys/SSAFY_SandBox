@@ -14,7 +14,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/articles")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PagingController {
 
     private final PagingService pagingService;

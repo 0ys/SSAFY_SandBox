@@ -12,7 +12,6 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/email")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmailController {
     private final EmailService emailService;
 

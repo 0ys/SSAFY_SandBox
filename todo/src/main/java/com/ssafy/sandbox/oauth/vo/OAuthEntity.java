@@ -30,4 +30,9 @@ public class OAuthEntity {
     public void updateAccessToken(String newAccessToken) {
         this.accessToken = newAccessToken;
     }
+
+    public void updateTokens(String newAccessToken, String newRefreshToken) {
+        this.accessToken = newAccessToken;
+        this.refreshToken = newRefreshToken;
+    }
 }

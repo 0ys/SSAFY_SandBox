@@ -1,22 +1,14 @@
 package com.ssafy.sandbox.oauth.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class KakaoTokenDto {
-    private String accessToken;
-    private String refreshToken;
 
-    public KakaoTokenDto(String accessToken, String refreshToken) {
-        this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
-    }
+    @JsonProperty("access_token")
+    private final String accessToken;
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public String getRefreshToken() {
-        return refreshToken;
-    }
+    @JsonProperty("refresh_token")
+    private final String refreshToken;
 }

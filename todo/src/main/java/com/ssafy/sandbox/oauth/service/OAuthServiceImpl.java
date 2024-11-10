@@ -20,50 +20,48 @@ import java.util.Optional;
 public class OAuthServiceImpl implements OAuthService {
 
     private final OAuthRepository repository;
-    private final KakaoApi kakaoApi;
+    private final KakaoApiService kakaoApi;
     private final UserRepository userRepository;
 
-
+    /**
+     * 사용자 인증 메서드
+     */
     @Override
     public ResponseEntity<?> authenticate(String code, String accessToken, String refreshToken) {
         KakaoTokenDto kakaoToken = kakaoApi.getToken(code);
-
         User user = kakaoApi.getUserInfo(kakaoToken.getAccessToken());
-        User existingUser = userRepository.findById(user.getId()).orElseGet(() -> userRepository.save(user));
 
+        // 기존 사용자 검색 또는 새로 저장
+        User existingUser = userRepository.findById(user.getId())
+                .orElseGet(() -> userRepository.save(user));
+
+        // OAuthEntity를 조회하고 없으면 새로 생성 후 저장
         OAuthEntity oAuthEntity = repository.findByUser(existingUser)
                 .orElse(new OAuthEntity(existingUser.getId(), kakaoToken.getAccessToken(), kakaoToken.getRefreshToken()));
-
-        oAuthEntity.setAccessToken(kakaoToken.getAccessToken());
-        oAuthEntity.setRefreshToken(kakaoToken.getRefreshToken());
+        oAuthEntity.updateTokens(kakaoToken.getAccessToken(), kakaoToken.getRefreshToken());
         repository.save(oAuthEntity);
 
-        return ResponseEntity.ok()
-                .header("Set-Cookie", "AccessToken=" + kakaoToken.getAccessToken() + "; Path=/; HttpOnly; Secure; SameSite=None")
-                .header("Set-Cookie", "RefreshToken=" + kakaoToken.getRefreshToken() + "; Path=/; HttpOnly; Secure; SameSite=None")
-                .body(new TokenResponseDto(kakaoToken.getAccessToken(), kakaoToken.getRefreshToken()));
+        return buildTokenResponse(kakaoToken.getAccessToken(), kakaoToken.getRefreshToken());
     }
 
+    /**
+     * 회원 정보 조회 메서드
+     */
     @Override
     public ResponseEntity<?> getMemberInfo(String accessToken, String refreshToken) {
-        // 토큰 로그 출력
-        System.out.println("Received AccessToken: " + accessToken);
-
-        // Access Token을 통해 회원 정보 조회
         Optional<OAuthEntity> oAuthEntityOpt = repository.findByAccessToken(accessToken);
+
         if (oAuthEntityOpt.isEmpty()) {
-            // 토큰이 존재하지 않는 경우
-            System.out.println("AccessToken not found or invalid");
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("status", 401, "error", "ERR_NOT_FOUND_MEMBER"));
+            return unauthorizedResponse("ERR_NOT_FOUND_MEMBER");
         }
 
         OAuthEntity oAuthEntity = oAuthEntityOpt.get();
-        return ResponseEntity.ok().body(new UserInfoResponseDto(oAuthEntity.getUser().getNickname()));
+        return ResponseEntity.ok(new UserInfoResponseDto(oAuthEntity.getUser().getNickname()));
     }
 
-
-
+    /**
+     * 토큰 재발급 메서드
+     */
     @Override
     public ResponseEntity<?> reissueToken(String refreshToken) {
         OAuthEntity oAuthEntity = repository.findByRefreshToken(refreshToken)
@@ -73,15 +71,38 @@ public class OAuthServiceImpl implements OAuthService {
         oAuthEntity.updateAccessToken(newToken.getAccessToken());
         repository.save(oAuthEntity);
 
-        return ResponseEntity.ok().body(new TokenResponseDto(newToken.getAccessToken(), newToken.getRefreshToken()));
+        return ResponseEntity.ok(new TokenResponseDto(newToken.getAccessToken(), newToken.getRefreshToken()));
     }
 
+    /**
+     * 로그아웃 메서드
+     */
     @Override
     public ResponseEntity<?> logout(String refreshToken) {
         OAuthEntity oAuthEntity = repository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new RuntimeException("ERR_MISSING_REFRESH_TOKEN"));
 
         repository.delete(oAuthEntity);
-        return ResponseEntity.ok().header("Set-Cookie", "refreshToken=; Max-Age=0; HttpOnly; Secure; SameSite=None").build();
+        return ResponseEntity.ok()
+                .header("Set-Cookie", "refreshToken=; Max-Age=0; HttpOnly; Secure; SameSite=None")
+                .build();
+    }
+
+    /**
+     * 토큰 응답을 생성하는 헬퍼 메서드
+     */
+    private ResponseEntity<?> buildTokenResponse(String accessToken, String refreshToken) {
+        return ResponseEntity.ok()
+                .header("Set-Cookie", "AccessToken=" + accessToken + "; Path=/; HttpOnly; Secure; SameSite=None")
+                .header("Set-Cookie", "RefreshToken=" + refreshToken + "; Path=/; HttpOnly; Secure; SameSite=None")
+                .body(new TokenResponseDto(accessToken, refreshToken));
+    }
+
+    /**
+     * 인증 실패 응답을 생성하는 헬퍼 메서드
+     */
+    private ResponseEntity<?> unauthorizedResponse(String errorMessage) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of("status", 401, "error", errorMessage));
     }
 }
